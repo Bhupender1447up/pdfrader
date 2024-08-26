@@ -21,7 +21,7 @@ const upload = multer({ storage: storage });
 app.use(express.static(path.join(__dirname, 'examples')));
 app.post('/upload', upload.single('pdf'), (req, res) => {
    
-    res.send("File uploaded successfully");
+    res.send({"File uploaded successfully":res});
 });
 
 // Serve the HTML form
