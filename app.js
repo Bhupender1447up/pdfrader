@@ -20,8 +20,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 app.use(express.static(path.join(__dirname, 'examples')));
 app.post('/upload', upload.single('pdf'), (req, res) => {
+    const filename = req.file.filename;
    
-    res.send("File uploaded successfully");
+    res.send({"message":"File uploaded successfully",'Filename':filename});
 });
 
 // Serve the HTML form
