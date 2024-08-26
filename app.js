@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'examples')));
 app.post('/upload', upload.single('pdf'), (req, res) => {
     const filename = req.file.filename;
    
-    res.send({"message":"File uploaded successfully",'Filename':filename});
+    res.send({message:"File uploaded successfully",Filename:filename});
 });
 
 // Serve the HTML form
