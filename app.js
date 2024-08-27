@@ -29,6 +29,8 @@ app.use(express.static(path.join(__dirname, "examples")));
 // });
 
 app.post("/upload", upload.single("pdf"), async (req, res) => {
+  const {book_coverFront} = req.body;
+
     try {
       const filename = req.file.filename;
       const filePath = path.join(__dirname, "uploads", filename);
@@ -37,9 +39,7 @@ app.post("/upload", upload.single("pdf"), async (req, res) => {
       const pdfDoc = await PDFDocument.load(fs.readFileSync(filePath));
   
       // Embed the image to be added to the pages
-      const img = await pdfDoc.embedPng(
-        fs.readFileSync("./image/Thesis-profiles3 (1).png")
-      );
+      const img = await pdfDoc.embedPng(book_coverFront);
   
       // Insert a new page at the beginning of the PDF
       const imagePageFront = pdfDoc.insertPage(0);
