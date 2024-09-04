@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, "examples")));
 // });
 
 app.post("/upload", upload.single("pdf"), async (req, res) => {
-  const {book_coverFront} = req.body;
+  const {book_coverFront,book_coverBack} = req.body;
 
     try {
       const filename = req.file.filename;
@@ -50,9 +50,7 @@ app.post("/upload", upload.single("pdf"), async (req, res) => {
         height: imagePageFront.getHeight(),
       });
   
-      const img2 = await pdfDoc.embedPng(
-        fs.readFileSync("./image/Thesis-profiles1.png")
-      );
+      const img2 = await pdfDoc.embedPng(book_coverBack);
   
       // Insert a new page at the end of the PDF
       const imagePageBack = pdfDoc.addPage(); // addPage() adds at the end
