@@ -5,8 +5,11 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 const fs = require("fs");
+const axios = require("axios");
 const { PDFDocument } = require("pdf-lib");
-
+require('dotenv').config();
+const SHOPIFY_STORE_URL = process.env.SHOPIFY_STORE_URL;
+const ADMIN_API_ACCESS_TOKEN = process.env.ADMIN_API_ACCESS_TOKEN;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -82,6 +85,30 @@ app.post("/upload", upload.single("pdf"), async (req, res) => {
 // Serve the HTML form
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "examples", "index.html"));
+});
+app.post("/rate", async(req, res) => {
+ const rate = req.body.rate
+  try {
+    const response = await axios.put(
+      `${SHOPIFY_STORE_URL}/admin/api/2023-10/variants/44614735200412.json`,
+      {
+        variant: {
+          id: 44614735200412,
+          price: rate,
+          compare_at_price: rate,
+        },
+      },
+      {
+        headers: {
+          'X-Shopify-Access-Token': ADMIN_API_ACCESS_TOKEN,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    res.send({data:response.data});
+  } catch (error) {
+    console.error('Error updating variant:', error.response?.data || error.message);
+  }
 });
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
