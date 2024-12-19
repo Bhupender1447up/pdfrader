@@ -10,7 +10,7 @@ const { PDFDocument } = require("pdf-lib");
 require('dotenv').config();
 const SHOPIFY_STORE_URL = process.env.SHOPIFY_STORE_URL;
 const ADMIN_API_ACCESS_TOKEN = process.env.ADMIN_API_ACCESS_TOKEN;
-const adminApiUrl = `${SHOPIFY_STORE_URL}/admin/api/2023-10/graphql.json`;
+const adminApiUrl = `${SHOPIFY_STORE_URL}/admin/api/2024-10/graphql.json`;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -305,10 +305,10 @@ app.post("/rate", async(req, res) => {
  const rate = req.body.rate
   try {
     const response = await axios.put(
-      `${SHOPIFY_STORE_URL}/admin/api/2023-10/variants/44614735200412.json`,
+      `${SHOPIFY_STORE_URL}/admin/api/2024-10/variants/45722719486210.json`,
       {
         variant: {
-          id: 44614735200412,
+          id: 45722719486210,
           price: rate,
           compare_at_price: rate,
         },
